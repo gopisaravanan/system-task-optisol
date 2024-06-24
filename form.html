@@ -15,24 +15,19 @@
     <div class="container">
       <div class="register col-md-5 col-sm-6">
         <h1 class="title"><strong>Bio Data</strong></h1>
-        <form role="form">
+        <form id="userForm" role="form">
           <div class="form-group">
             <label class="reg_txt">Name <span>*</span></label>
             <div class="controls form-inline">
-              <input type="text" class="input-name" placeholder="First" />
-              <input type="text" class="input-name" placeholder="Last" />
+              <input type="text" id="firstName" class="input-name" placeholder="First" />
+              <input type="text" id="lastName" class="input-name" placeholder="Last" />
             </div>
           </div>
           <div class="clearfix"></div>
 
           <div class="form-group">
             <label class="reg_txt">Email <span>*</span></label>
-            <input
-              type="text"
-              class="form-register text"
-              id=""
-              placeholder="E-mail"
-            />
+            <input type="text" id="email" class="form-register text" placeholder="E-mail" />
           </div>
           <div class="clearfix"></div>
 
@@ -40,71 +35,39 @@
             <label class="reg_txt">Phone Number <span>*</span></label>
             <div class="clearfix"></div>
             <div class="wsite-form">
-              <input type="text" class="text input-name1" />
-            </div>
-            <div class="line">-</div>
-            <div class="wsite-form">
-              <input type="text" class="text input-name1" />
-            </div>
-            <div class="line">-</div>
-            <div class="wsite-form">
-              <input type="text" class="text input-name1" />
+              <input type="text" id="phone" class="text input-name1" />
             </div>
           </div>
 
           <div class="clearfix"></div>
           <div class="form-group">
             <label class="reg_txt">Address <span>*</span></label>
-            <input
-              type="text"
-              class="form-register text"
-              id=""
-              placeholder="Line 1"
-              style="margin-bottom: 15px"
-            />
-            <input
-              type="text"
-              class="form-register text"
-              id=""
-              placeholder="Line 2"
-            />
+            <input type="text" id="addressLine1" class="form-register text" placeholder="Line 1" style="margin-bottom: 15px" />
+            <input type="text" id="addressLine2" class="form-register text" placeholder="Line 2" />
           </div>
           <div class="form-group">
             <div class="controls form-inline">
-              <input type="text" class="input-name" placeholder="City" />
-              <input type="text" class="input-name" placeholder="State" />
+              <input type="text" id="city" class="input-name" placeholder="City" />
+              <input type="text" id="state" class="input-name" placeholder="State" />
             </div>
           </div>
           <div class="form-group">
             <div class="controls form-inline">
-              <input type="text" class="input-name" placeholder="Zip Code" />
-              <input type="text" class="input-name" placeholder="Country" />
+              <input type="text" id="zipCode" class="input-name" placeholder="Zip Code" />
+              <input type="text" id="country" class="input-name" placeholder="Country" />
             </div>
           </div>
           <div class="form-group">
-            <label class="reg_txt"
-              >Write Your qualification <span>*</span></label
-            >
-            <input
-              type="text"
-              class="form-register text"
-              id=""
-              placeholder=""
-              style="margin-bottom: 15px"
-            />
-            <!-- <input type="text" class="form-register text" id="" placeholder="Add your qualification"> <span><img alt="" src="images/plus.png" class="add"></span> -->
+            <label class="reg_txt">Write Your qualification <span>*</span></label>
+            <input type="text" id="qualification" class="form-register text" style="margin-bottom: 15px" />
           </div>
           <div class="clearfix"></div>
           <div class="form-group">
             <label class="reg_txt">Comment <span>*</span></label>
-            <textarea class="form-register text"></textarea>
+            <textarea id="comment" class="form-register text"></textarea>
           </div>
           <div class="form-group">
-            <button
-              type="submit"
-              class="btn btn-default submit"
-              style="width: 97%"
-            >
+            <button type="submit" class="btn btn-default submit" style="width: 97%">
               Submit
             </button>
           </div>
@@ -124,7 +87,7 @@
             <tr>
               <td>Joe</td>
               <td>J@Info.com</td>
-              <td>2323456</td>
+              <td>9876543210</td>
               <td><button class="ed">Edit</button></td>
               <td>
                 <button class="ed" style="background: #f00">Delete</button>
@@ -134,6 +97,25 @@
           </tbody>
         </table>
       </div>
+      <div id="userModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>User Details</h2>
+          <p><strong>First Name:</strong> <span id="viewFirstName"></span></p>
+          <p><strong>Last Name:</strong> <span id="viewLastName"></span></p>
+          <p><strong>Email:</strong> <span id="viewEmail"></span></p>
+          <p><strong>Phone Number:</strong> <span id="viewPhoneNumber"></span></p>
+          <p><strong>Address Line 1:</strong> <span id="viewAddress1"></span></p>
+          <p><strong>Address Line 2:</strong> <span id="viewAddress2"></span></p>
+          <p><strong>City:</strong> <span id="viewCity"></span></p>
+          <p><strong>State:</strong> <span id="viewState"></span></p>
+          <p><strong>Zip Code:</strong> <span id="viewZipCode"></span></p>
+          <p><strong>Country:</strong> <span id="viewCountry"></span></p>
+          <p><strong>Qualification:</strong> <span id="viewQualification"></span></p>
+          <p><strong>Comments:</strong> <span id="viewComments"></span></p>
+        </div>
+      </div>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
