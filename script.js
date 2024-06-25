@@ -7,13 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Form submission handler
   document.getElementById('userForm').addEventListener('submit', handleFormSubmit);
 
+  let isEditing = false;
+  let editingUserId = null;
+
   // Handle form submission
   function handleFormSubmit(event) {
     event.preventDefault();
     const isValid = validateForm();
     if (isValid) {
       const formData = getFormData();
-      createUser(formData);
+      if (isEditing) {
+        updateUser(editingUserId, formData);
+      } else {
+        createUser(formData);
+      }
     } else {
       alert('Please fill in all required fields and correct any validation errors.');
     }
@@ -46,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const errorElement = document.createElement('div');
       errorElement.className = 'error-message';
       errorElement.textContent = message;
+      errorElement.style.color = 'red'; // Set error message color to red
 
       inputField.style.borderColor = 'red';
 
@@ -104,15 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-        // Validate country using regex
-        function validateCountry(countryInput) {
-          if (!countryRegex.test(countryInput.value)) {
-            showErrorMessage(countryInput, 'Country must contain only letters, spaces, and hyphens.');
-            isValid = false;
-          } else {
-            removeErrorMessage(countryInput);
-          }
-        }
 
     // Check all required fields
     checkRequired(document.getElementById('firstName'), 'First Name');
@@ -122,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
     checkRequired(document.getElementById('addressLine1'), 'Address Line 1');
     checkRequired(document.getElementById('city'), 'City');
     checkRequired(document.getElementById('zipCode'), 'Zip Code');
-    checkRequired(document.getElementById('country'), 'Country');
     checkRequired(document.getElementById('qualification'), 'Qualification');
     checkRequired(document.getElementById('comment'), 'Comment');
 
@@ -201,82 +199,69 @@ document.addEventListener('DOMContentLoaded', () => {
     table.appendChild(row);
   }
 
-// Edit user
-window.editUser = function(id) {
-  // Fetch user details
-  fetch(`${apiUrl}/${id}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch user details');
-      }
-      return response.json();
+  // Edit user
+  window.editUser = function(id) {
+    // Fetch user details
+    fetch(`${apiUrl}/${id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch user details');
+        }
+        return response.json();
+      })
+      .then(user => {
+        // Populate form fields with user data
+        document.getElementById('firstName').value = user.firstName;
+        document.getElementById('lastName').value = user.lastName;
+        document.getElementById('email').value = user.email;
+        document.getElementById('phone').value = user.phoneNumber;
+        document.getElementById('addressLine1').value = user.address1;
+        document.getElementById('addressLine2').value = user.address2;
+        document.getElementById('city').value = user.city;
+        document.getElementById('state').value = user.state;
+        document.getElementById('zipCode').value = user.zipCode;
+        document.getElementById('country').value = user.country;
+        document.getElementById('qualification').value = user.qualification;
+        document.getElementById('comment').value = user.comments;
+
+        // Change submit button to Update
+        isEditing = true;
+        editingUserId = id;
+        const submitButton = document.querySelector('.submit');
+        submitButton.textContent = 'Update';
+      })
+      .catch(error => console.error('Error:', error));
+  };
+
+  // Update user
+  function updateUser(id, data) {
+    fetch(`${apiUrl}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
-    .then(user => {
-      // Populate form fields with user data
-      document.getElementById('firstName').value = user.firstName;
-      document.getElementById('lastName').value = user.lastName;
-      document.getElementById('email').value = user.email;
-      document.getElementById('phone').value = user.phoneNumber;
-      document.getElementById('addressLine1').value = user.address1;
-      document.getElementById('addressLine2').value = user.address2;
-      document.getElementById('city').value = user.city;
-      document.getElementById('state').value = user.state;
-      document.getElementById('zipCode').value = user.zipCode;
-      document.getElementById('country').value = user.country;
-      document.getElementById('qualification').value = user.qualification;
-      document.getElementById('comment').value = user.comments;
-
-      // Change submit button to Update
-      const submitButton = document.querySelector('.submit');
-      submitButton.textContent = 'Update';
-
-      // Add event listener to update form submission
-      submitButton.removeEventListener('click', handleFormSubmit);
-      submitButton.addEventListener('click', () => handleUpdate(id));
+    .then(response => {
+      if (response.ok) {
+        alert('User updated successfully!');
+        fetchUsers(); // Refresh the data after updating a user
+        resetForm(); // Reset the form after successful update
+      } else {
+        throw new Error('Failed to update the user');
+      }
     })
     .catch(error => console.error('Error:', error));
-};
-
-// Handle update submission
-function handleUpdate(id) {
-  const isValid = validateForm();
-  if (isValid) {
-    const formData = getFormData();
-    updateUser(id, formData);
-  } else {
-    alert('Please fill in all required fields and correct any validation errors.');
   }
-}
 
-// Update user
-function updateUser(id, data) {
-  fetch(`${apiUrl}/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (response.ok) {
-      alert('User updated successfully!');
-      fetchUsers(); // Refresh the data after updating a user
-      resetForm(); // Reset the form after successful update
-    } else {
-      throw new Error('Failed to update the user');
-    }
-  })
-  .catch(error => console.error('Error:', error));
-}
-
-// Reset form after successful update
-function resetForm() {
-  const submitButton = document.querySelector('.submit');
-  submitButton.textContent = 'Submit';
-  document.getElementById('userForm').reset();
-  submitButton.removeEventListener('click', handleUpdate);
-  submitButton.addEventListener('click', handleFormSubmit);
-}
+  // Reset form after successful update
+  function resetForm() {
+    isEditing = false;
+    editingUserId = null;
+    const submitButton = document.querySelector('.submit');
+    submitButton.textContent = 'Submit';
+    document.getElementById('userForm').reset();
+  }
 
   // Delete user
   window.deleteUser = function(id) {
@@ -294,44 +279,42 @@ function resetForm() {
     .catch(error => console.error('Error:', error));
   };
 
+  // View user
+  window.viewUser = function(id) {
+    fetch(`${apiUrl}/${id}`)
+      .then(response => response.json())
+      .then(user => {
+        // Populate the modal with user details
+        document.getElementById('viewFirstName').textContent = user.firstName;
+        document.getElementById('viewLastName').textContent = user.lastName;
+        document.getElementById('viewEmail').textContent = user.email;
+        document.getElementById('viewPhoneNumber').textContent = user.phoneNumber;
+        document.getElementById('viewAddress1').textContent = user.address1;
+        document.getElementById('viewAddress2').textContent = user.address2;
+        document.getElementById('viewCity').textContent = user.city;
+        document.getElementById('viewState').textContent = user.state;
+        document.getElementById('viewZipCode').textContent = user.zipCode;
+        document.getElementById('viewCountry').textContent = user.country;
+        document.getElementById('viewQualification').textContent = user.qualification;
+        document.getElementById('viewComments').textContent = user.comments;
 
-// View user
-window.viewUser = function(id) {
-  fetch(`${apiUrl}/${id}`)
-    .then(response => response.json())
-    .then(user => {
-      // Populate the modal with user details
-      document.getElementById('viewFirstName').textContent = user.firstName;
-      document.getElementById('viewLastName').textContent = user.lastName;
-      document.getElementById('viewEmail').textContent = user.email;
-      document.getElementById('viewPhoneNumber').textContent = user.phoneNumber;
-      document.getElementById('viewAddress1').textContent = user.address1;
-      document.getElementById('viewAddress2').textContent = user.address2;
-      document.getElementById('viewCity').textContent = user.city;
-      document.getElementById('viewState').textContent = user.state;
-      document.getElementById('viewZipCode').textContent = user.zipCode;
-      document.getElementById('viewCountry').textContent = user.country;
-      document.getElementById('viewQualification').textContent = user.qualification;
-      document.getElementById('viewComments').textContent = user.comments;
+        // Show the modal
+        const modal = document.getElementById('userModal');
+        modal.style.display = 'block';
 
-      // Show the modal
-      const modal = document.getElementById('userModal');
-      modal.style.display = 'block';
-
-      // Close modal when 'x' is clicked
-      const span = document.getElementsByClassName('close')[0];
-      span.onclick = function() {
-        modal.style.display = 'none';
-      };
-
-      // Close modal when clicking outside the modal content
-      window.onclick = function(event) {
-        if (event.target == modal) {
+        // Close modal when 'x' is clicked
+        const span = document.getElementsByClassName('close')[0];
+        span.onclick = function() {
           modal.style.display = 'none';
-        }
-      };
-    })
-    .catch(error => console.error('Error fetching user details:', error));
-};
+        };
 
+        // Close modal when clicking outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+      })
+      .catch(error => console.error('Error fetching user details:', error));
+  };
 });
