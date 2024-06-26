@@ -708,7 +708,7 @@ label {
 
 .form-control {
   display: block;
-  width: 92%;
+  width: 92% !important;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -1041,10 +1041,10 @@ fieldset[disabled] input[type="checkbox"] {
   .form-inline .input-group .input-group-addon,
   .form-inline .input-group .input-group-btn,
   .form-inline .input-group .form-control {
-    width: auto;
+    width: auto !important;
   }
   .form-inline .input-group > .form-control {
-    width: 100%;
+    width: 100% !important;
   }
   .form-inline .control-label {
     margin-bottom: 0;
@@ -1158,7 +1158,6 @@ fieldset[disabled] input[type="checkbox"] {
 	border:none;
 	width:70px;
 	font-size:13px;
-		
 }
 
 .ed:hover{
@@ -1236,7 +1235,7 @@ h1 {
     display: block;
     font-size: 14px;   
     padding: 11px 12px;   
-    width: 92%;
+    width: 92% !important;
 	border:1px solid #757575;  
 }
 
@@ -1252,7 +1251,7 @@ h1 {
 	box-sizing: border-box;
 	float:left;
 	margin-right:7px;
-	width:48%; 
+	width:48% !important; 
 	margin-bottom:20px; 
 	border:1px solid #757575;  
 }
@@ -1267,12 +1266,12 @@ h1 {
     font-size: 14px;   
     padding: 11px 12px; 
 	box-sizing: border-box; 
-	width:100%  ;
+	width:100% !important ;
 	border:1px solid #757575;   
 }
 
 .wsite-form{
-	width:29%;
+	width:29% !important;
 	float:left;	
 	
 }
@@ -1282,7 +1281,7 @@ h1 {
     line-height: 40px;
     overflow: hidden;
     text-align: center;
-    width: 5%;
+    width: 5% !important;
 	color:#fff;
 }
 
@@ -1295,6 +1294,43 @@ h1 {
     margin-right: -16px;
     margin-top: -34px;
 }
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80% !important;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 
 
 
