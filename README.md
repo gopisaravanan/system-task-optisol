@@ -1,1 +1,0 @@
-# system-task-optisol
