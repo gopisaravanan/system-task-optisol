@@ -1,16 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const apiUrl = 'http://54.202.218.249:9501/api/users';
-
-  // Fetch all users when the page loads
   fetchUsers();
-
-  // Form submission handler
   document.getElementById('userForm').addEventListener('submit', handleFormSubmit);
 
   let isEditing = false;
   let editingUserId = null;
 
-  // Handle form submission
   function handleFormSubmit(event) {
     event.preventDefault();
     const isValid = validateForm();
@@ -45,25 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const zipCodeRegex = /^\d{6}$/;
     const countryRegex = /^[a-zA-Z\s-]+$/;
 
-    // Validation flags
     let isValid = true;
 
-    // Function to show error message and highlight the field
     function showErrorMessage(inputField, message) {
       const errorElement = document.createElement('div');
       errorElement.className = 'error-message';
       errorElement.textContent = message;
-      errorElement.style.color = 'red'; // Set error message color to red
+      errorElement.style.color = 'red';
 
       inputField.style.borderColor = 'red';
 
-      // Check if error message already exists, if not add it
       if (!inputField.parentNode.querySelector('.error-message')) {
         inputField.parentNode.appendChild(errorElement);
       }
     }
 
-    // Function to remove error message and remove highlight from the field
     function removeErrorMessage(inputField) {
       const errorElement = inputField.parentNode.querySelector('.error-message');
       if (errorElement) {
@@ -82,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Validate email using regex
+    // Validate regex
     function validateEmail(emailInput) {
       if (!emailRegex.test(emailInput.value)) {
         showErrorMessage(emailInput, 'Invalid email format.');
@@ -92,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Validate phone number using regex
     function validatePhone(phoneInput) {
       if (!phoneRegex.test(phoneInput.value)) {
         showErrorMessage(phoneInput, 'Phone number must be 10 digits.');
@@ -102,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Validate zip code using regex
     function validateZipCode(zipCodeInput) {
       if (!zipCodeRegex.test(zipCodeInput.value)) {
         showErrorMessage(zipCodeInput, 'Zip code must be 6 digits.');
@@ -112,8 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-
-    // Check all required fields
     checkRequired(document.getElementById('firstName'), 'First Name');
     checkRequired(document.getElementById('lastName'), 'Last Name');
     checkRequired(document.getElementById('email'), 'Email');
@@ -124,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     checkRequired(document.getElementById('qualification'), 'Qualification');
     checkRequired(document.getElementById('comment'), 'Comment');
 
-    // Validate specific fields
     validateEmail(document.getElementById('email'));
     validatePhone(document.getElementById('phone'));
     validateZipCode(document.getElementById('zipCode'));
@@ -132,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return isValid;
   }
 
-  // Get form data
   function getFormData() {
     return {
       firstName: document.getElementById('firstName').value,
@@ -163,8 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(user => {
       appendUserToTable(user);
       alert('User created successfully!');
-      fetchUsers(); // Refresh the data after creating a new user
-      document.getElementById('userForm').reset(); // Reset the form after successful submission
+      fetchUsers();
+      document.getElementById('userForm').reset();
     })
     .catch(error => console.error('Error:', error));
   }
@@ -175,7 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(users => {
         const table = document.querySelector('.table tbody');
-        table.innerHTML = ''; // Clear the table before appending new data
+        const rows = table.querySelectorAll('tr:not(.ztxt)');
+
+        rows.forEach(row => {
+          row.innerHTML = '';
+        });
+
         users.forEach(user => {
           appendUserToTable(user);
         });
@@ -201,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Edit user
   window.editUser = function(id) {
-    // Fetch user details
     fetch(`${apiUrl}/${id}`)
       .then(response => {
         if (!response.ok) {
@@ -210,7 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return response.json();
       })
       .then(user => {
-        // Populate form fields with user data
         document.getElementById('firstName').value = user.firstName;
         document.getElementById('lastName').value = user.lastName;
         document.getElementById('email').value = user.email;
@@ -224,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('qualification').value = user.qualification;
         document.getElementById('comment').value = user.comments;
 
-        // Change submit button to Update
         isEditing = true;
         editingUserId = id;
         const submitButton = document.querySelector('.submit');
@@ -245,8 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => {
       if (response.ok) {
         alert('User updated successfully!');
-        fetchUsers(); // Refresh the data after updating a user
-        resetForm(); // Reset the form after successful update
+        fetchUsers();
+        resetForm();
       } else {
         throw new Error('Failed to update the user');
       }
@@ -254,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => console.error('Error:', error));
   }
 
-  // Reset form after successful update
   function resetForm() {
     isEditing = false;
     editingUserId = null;
@@ -271,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => {
       if (response.ok) {
         alert('User deleted successfully!');
-        fetchUsers(); // Refresh the data after deleting a user
+        fetchUsers();
       } else {
         throw new Error('Failed to delete the user');
       }
@@ -284,7 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`${apiUrl}/${id}`)
       .then(response => response.json())
       .then(user => {
-        // Populate the modal with user details
         document.getElementById('viewFirstName').textContent = user.firstName;
         document.getElementById('viewLastName').textContent = user.lastName;
         document.getElementById('viewEmail').textContent = user.email;
@@ -298,17 +283,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('viewQualification').textContent = user.qualification;
         document.getElementById('viewComments').textContent = user.comments;
 
-        // Show the modal
         const modal = document.getElementById('userModal');
         modal.style.display = 'block';
 
-        // Close modal when 'x' is clicked
         const span = document.getElementsByClassName('close')[0];
         span.onclick = function() {
           modal.style.display = 'none';
         };
 
-        // Close modal when clicking outside the modal content
         window.onclick = function(event) {
           if (event.target == modal) {
             modal.style.display = 'none';
