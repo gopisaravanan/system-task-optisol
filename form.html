@@ -1,123 +1,131 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>::sample ::</title>
-    <link href="css/style.css" type="text/css" rel="stylesheet" />
-    <link
-      href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,600"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="container">
-      <div class="register col-md-5 col-sm-6">
-        <h1 class="title"><strong>Bio Data</strong></h1>
-        <form id="userForm" role="form">
-          <div class="form-group">
-            <label class="reg_txt">Name <span>*</span></label>
-            <div class="controls form-inline">
-              <input type="text" id="firstName" class="input-name" placeholder="First" />
-              <input type="text" id="lastName" class="input-name" placeholder="Last" />
-            </div>
-          </div>
-          <div class="clearfix"></div>
 
-          <div class="form-group">
-            <label class="reg_txt">Email <span>*</span></label>
-            <input type="text" id="email" class="form-register text" placeholder="E-mail" />
-          </div>
-          <div class="clearfix"></div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>::sample ::</title>
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,600" rel="stylesheet" type="text/css" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- CSS -->
+  <link href="css/style.css" type="text/css" rel="stylesheet" />
 
-          <div class="form-group" style="height: 70px">
-            <label class="reg_txt">Phone Number <span>*</span></label>
-            <div class="clearfix"></div>
-            <div class="wsite-form">
-              <input type="text" id="phone" class="text input-name1" />
-            </div>
-          </div>
 
-          <div class="clearfix"></div>
-          <div class="form-group">
-            <label class="reg_txt">Address <span>*</span></label>
-            <input type="text" id="addressLine1" class="form-register text" placeholder="Line 1" style="margin-bottom: 15px" />
-            <input type="text" id="addressLine2" class="form-register text" placeholder="Line 2" />
+
+</head>
+
+<body class="d-flex">
+  <div class="container">
+    <div class="register col-md-5 col-sm-6">
+      <h1 class="title"><strong>Bio Data</strong></h1>
+      <form id="userForm" role="form">
+        <div class="form-group">
+          <label class="reg_txt">Name <span>*</span></label>
+          <div class="controls form-inline">
+            <input type="text" id="firstName" class="input-name" placeholder="First" />
+            <input type="text" id="lastName" class="input-name" placeholder="Last" />
           </div>
-          <div class="form-group">
-            <div class="controls form-inline">
-              <input type="text" id="city" class="input-name" placeholder="City" />
-              <input type="text" id="state" class="input-name" placeholder="State" />
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="controls form-inline">
-              <input type="text" id="zipCode" class="input-name" placeholder="Zip Code" />
-              <input type="text" id="country" class="input-name" placeholder="Country" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="reg_txt">Write Your qualification <span>*</span></label>
-            <input type="text" id="qualification" class="form-register text" style="margin-bottom: 15px" />
-          </div>
-          <div class="clearfix"></div>
-          <div class="form-group">
-            <label class="reg_txt">Comment <span>*</span></label>
-            <textarea id="comment" class="form-register text"></textarea>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default submit" style="width: 97%">
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="col-md-6 tabt">
-        <table class="table">
-          <tbody>
-            <tr class="ztxt">
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Edit</th>
-              <th>Delete</th>
-              <th>View</th>
-            </tr>
-            <tr id="rowData">
-              <td>Joe</td>
-              <td>J@Info.com</td>
-              <td>9876543210</td>
-              <td><button class="ed">Edit</button></td>
-              <td>
-                <button class="ed" style="background: #f00">Delete</button>
-              </td>
-              <td><button class="ed" style="background: #000">View</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div id="userModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>User Details</h2>
-          <p><strong>First Name:</strong> <span id="viewFirstName"></span></p>
-          <p><strong>Last Name:</strong> <span id="viewLastName"></span></p>
-          <p><strong>Email:</strong> <span id="viewEmail"></span></p>
-          <p><strong>Phone Number:</strong> <span id="viewPhoneNumber"></span></p>
-          <p><strong>Address Line 1:</strong> <span id="viewAddress1"></span></p>
-          <p><strong>Address Line 2:</strong> <span id="viewAddress2"></span></p>
-          <p><strong>City:</strong> <span id="viewCity"></span></p>
-          <p><strong>State:</strong> <span id="viewState"></span></p>
-          <p><strong>Zip Code:</strong> <span id="viewZipCode"></span></p>
-          <p><strong>Country:</strong> <span id="viewCountry"></span></p>
-          <p><strong>Qualification:</strong> <span id="viewQualification"></span></p>
-          <p><strong>Comments:</strong> <span id="viewComments"></span></p>
         </div>
+        <div class="clearfix"></div>
+
+        <div class="form-group">
+          <label class="reg_txt">Email <span>*</span></label>
+          <input type="text" id="email" class="form-register text" placeholder="E-mail" />
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="form-group" style="height: 70px">
+          <label class="reg_txt">Phone Number <span>*</span></label>
+          <div class="clearfix"></div>
+          <div class="wsite-form">
+            <input type="text" id="phone" class="text input-name1" />
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="form-group">
+          <label class="reg_txt">Address <span>*</span></label>
+          <input type="text" id="addressLine1" class="form-register text" placeholder="Line 1"
+            style="margin-bottom: 15px" />
+          <input type="text" id="addressLine2" class="form-register text" placeholder="Line 2" />
+        </div>
+        <div class="form-group">
+          <div class="controls form-inline">
+            <input type="text" id="city" class="input-name" placeholder="City" />
+            <input type="text" id="state" class="input-name" placeholder="State" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="controls form-inline">
+            <input type="text" id="zipCode" class="input-name" placeholder="Zip Code" />
+            <input type="text" id="country" class="input-name" placeholder="Country" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="reg_txt">Write Your qualification <span>*</span></label>
+          <input type="text" id="qualification" class="form-register text" style="margin-bottom: 15px" />
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+          <label class="reg_txt">Comment <span>*</span></label>
+          <textarea id="comment" class="form-register text"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default submit" style="width: 97%">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6 tabt">
+      <table class="table">
+        <tbody>
+          <tr class="ztxt">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>View</th>
+          </tr>
+          <tr id="rowData">
+            <td>Joe</td>
+            <td>J@Info.com</td>
+            <td>9876543210</td>
+            <td><button class="ed">Edit</button></td>
+            <td>
+              <button class="ed" style="background: #f00">Delete</button>
+            </td>
+            <td><button class="ed" style="background: #000">View</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="userModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>User Details</h2>
+        <p><strong>First Name:</strong> <span id="viewFirstName"></span></p>
+        <p><strong>Last Name:</strong> <span id="viewLastName"></span></p>
+        <p><strong>Email:</strong> <span id="viewEmail"></span></p>
+        <p><strong>Phone Number:</strong> <span id="viewPhoneNumber"></span></p>
+        <p><strong>Address Line 1:</strong> <span id="viewAddress1"></span></p>
+        <p><strong>Address Line 2:</strong> <span id="viewAddress2"></span></p>
+        <p><strong>City:</strong> <span id="viewCity"></span></p>
+        <p><strong>State:</strong> <span id="viewState"></span></p>
+        <p><strong>Zip Code:</strong> <span id="viewZipCode"></span></p>
+        <p><strong>Country:</strong> <span id="viewCountry"></span></p>
+        <p><strong>Qualification:</strong> <span id="viewQualification"></span></p>
+        <p><strong>Comments:</strong> <span id="viewComments"></span></p>
       </div>
     </div>
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>
